@@ -1,37 +1,42 @@
 #include "word_counter.h"
-#include <list>
-#include <iostream>
-#include <fstream>
-#include <string>
+
+#include <algorithm>
 #include <cctype>
+#include <functional>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
+bool WordCounter::isWordValid(char symbol) {
+    return std::isalnum(static_cast<unsigned char>(symbol)) != 0;
+}
 
-void WordCounter::countWords(const std::list<std::string>& text) {
-    for (const std::string &line: text) {
-        std::string word;
-        for (int i = 0; i < line.length(); i++) {
-            char symbol = line[i];
-            if (std::isalnum(symbol)) {
-                word += symbol;
-            } else {
-                if (!word.empty()) {
-                    words_counter[word]++;
-                    total_words++;
-                    word.clear();
-                }
+void WordCounter::processLine(const std::string &line) {
+    std::string word;
+    for (const char SYMBOL: line) {
+        if (isWordValid(SYMBOL)) {
+            word += SYMBOL;
+        } else {
+            if (!word.empty()) {
+                wordsCounter[word]++;
+                totalWords++;
+                word.clear();
             }
         }
-        if (!word.empty()){
-            words_counter[word]++;
-            total_words++;
-        }
+    }
+
+    if (!word.empty()) {
+        wordsCounter[word]++;
+        totalWords++;
     }
 }
 
-const std::map<std::string, int>& WordCounter::getWordsCounter() const {
-    return words_counter;
-}
-
-int WordCounter::getTotalWords() const{
-    return total_words;
+std::vector<WordStat> WordCounter::getStatistics() const {
+    std::vector<WordStat> statistics;
+    for (const auto &element: wordsCounter) {
+        const double PERCENTAGE = static_cast<double>(element.second) / static_cast<double>(totalWords) * 100.0;
+        statistics.emplace_back(WordStat{.word = element.first, .frequency = element.second, .percentage = PERCENTAGE});
+    }
+    std::ranges::sort(statistics, std::greater{}, &WordStat::frequency);
+    return statistics;
 }

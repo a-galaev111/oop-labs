@@ -1,11 +1,12 @@
-#include <map>
+#include "word_counter.h"
+
 #include <string>
-#include <utility>
+#include <vector>
 
 class CsvWriter {
-private:
-    static bool compareWords(const std::pair<std::string, int> &first, const std::pair<std::string, int> &second);
+
 
 public:
-    void writeCsv(const std::string &fileName, const std::map<std::string, int> &wordsCounter, int totalWords);
+    [[nodiscard]]
+    static bool writeCsv(const std::string &fileName, const std::vector<WordStat> &statistics, const std::string& header);
 };

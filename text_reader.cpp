@@ -1,21 +1,13 @@
 #include "text_reader.h"
 #include <fstream>
+#include <string>
 
 
-void TextReader::readFile(const std::string &file_name) {
-    std::ifstream input;
-    input.open(file_name);
-    if (!input.is_open()) {
-        return;
-    }
-    std::string line;
-
-    while (std::getline(input, line)) {
-        text.push_back(line);
-    }
+bool TextReader::openFile(const std::string& fileName) {
+    input.open(fileName);
+    return input.is_open();
 }
 
-
-const std::list<std::string>& TextReader::getText() const {
-    return text;
+bool TextReader::readLine(std::string& line) {
+    return static_cast<bool>(std::getline(input, line));
 }

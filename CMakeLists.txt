@@ -3,11 +3,11 @@ project(oop_lab0)
 
 set(CMAKE_CXX_STANDARD 20)
 
-find_program(CLANG_TIDY clang-tidy)
-
-if(CLANG_TIDY)
-    set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY})
-endif()
+set(CMAKE_CXX_CLANG_TIDY
+        "C:/Program Files/LLVM/bin/clang-tidy.exe"
+        "--extra-arg-before=--target=x86_64-w64-mingw32"
+        "--extra-arg-before=--sysroot=C:/Program Files/JetBrains/CLion 2025.2.1/bin/mingw"
+)
 
 add_executable(oop_lab0 main.cpp
         word_counter.cpp

@@ -1,15 +1,28 @@
-#include <list>
-#include <string>
-#include <map>
+#ifndef WORD_COUNTER_H
+#define WORD_COUNTER_H
 
-class WordCounter
-{
+#include <string>
+#include <unordered_map>
+#include <vector>
+
+struct WordStat {
+    std::string word;
+    int frequency;
+    double percentage;
+};
+
+class WordCounter {
 private:
-    std::map<std::string, int> words_counter;
-    int total_words = 0;
+    std::unordered_map<std::string, int> wordsCounter;
+    int totalWords = 0;
+
+    static bool isWordValid(char symbol);
 
 public:
-    void countWords(const std::list<std::string>& text);
-    const std::map<std::string, int>& getWordsCounter() const;
-    int getTotalWords() const;
+    void processLine(const std::string& line);
+
+    [[nodiscard]]
+    std::vector<WordStat> getStatistics() const;
 };
+
+#endif

@@ -1,11 +1,11 @@
+#include <fstream>
 #include <string>
-#include <list>
 
 
 class TextReader {
 private:
-    std::list<std::string> text;
+    std::ifstream input;
 public:
-    void readFile(const std::string& file_name);
-    const std::list<std::string>& getText() const;
+    bool openFile(const std::string& fileName);
+    bool readLine(std::string& line);
 };
