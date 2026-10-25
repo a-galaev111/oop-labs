@@ -1,0 +1,7 @@
+.idea/
+cmake-build-*/
+*.o
+*.obj
+*.exe
+input.txt
+output.csv
