@@ -13,9 +13,9 @@ bool WordCounter::isWordValid(char symbol) {
 
 void WordCounter::processLine(const std::string &line) {
     std::string word;
-    for (const char SYMBOL: line) {
-        if (isWordValid(SYMBOL)) {
-            word += SYMBOL;
+    for (const char symbol: line) { //NOLINT
+        if (isWordValid(symbol)) {
+            word += symbol;
         } else {
             if (!word.empty()) {
                 wordsCounter[word]++;
@@ -34,8 +34,8 @@ void WordCounter::processLine(const std::string &line) {
 std::vector<WordStat> WordCounter::getStatistics() const {
     std::vector<WordStat> statistics;
     for (const auto &element: wordsCounter) {
-        const double PERCENTAGE = static_cast<double>(element.second) / static_cast<double>(totalWords) * 100.0;
-        statistics.emplace_back(WordStat{.word = element.first, .frequency = element.second, .percentage = PERCENTAGE});
+        const double percentage = static_cast<double>(element.second) / static_cast<double>(totalWords) * 100.0; //NOLINT
+        statistics.emplace_back(WordStat{.word = element.first, .frequency = element.second, .percentage = percentage});
     }
     std::ranges::sort(statistics, std::greater{}, &WordStat::frequency);
     return statistics;

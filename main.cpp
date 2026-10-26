@@ -3,23 +3,22 @@
 #include "word_counter.h"
 
 #include <iostream>
-#include <iterator>
 #include <string>
 #include <vector>
 
 int main(int argc, char *argv[]) {
-    constexpr int EXPECTED_ARGUMENT_COUNT = 3;
+    constexpr int expected_argument_count = 3; //NOLINT
 
-    if (argc != EXPECTED_ARGUMENT_COUNT) {
+    if (argc != expected_argument_count) {
         std::cerr << "Error: invalid input format\n";
         return 1;
     }
 
-    const std::string INPUT_FILE = *std::next(argv);
-    const std::string OUTPUT_FILE = *std::next(argv, 2);
+    const std::string inputFile = argv[1]; //NOLINT
+    const std::string outputFile = argv[2]; //NOLINT
 
     TextReader reader;
-    if (!reader.openFile(INPUT_FILE)) {
+    if (!reader.openFile(inputFile)) {
         std::cerr << "Failed to open input file\n";
         return 1;
     }
@@ -29,10 +28,10 @@ int main(int argc, char *argv[]) {
     while (reader.readLine(line)) {
         counter.processLine(line);
     }
-    const std::vector<WordStat> STATISTICS = counter.getStatistics();
+    const std::vector<WordStat> statistics = counter.getStatistics(); //NOLINT
 
-    const std::string CSV_HEADER = "Word,Frequency,Frequency (%)";
-    if (!CsvWriter::writeCsv(OUTPUT_FILE, STATISTICS, CSV_HEADER)) {
+    const std::string csvHeader = "Word,Frequency,Frequency (%)"; //NOLINT
+    if (!CsvWriter::writeCsv(outputFile, statistics, csvHeader)) {
         std::cerr << "Failed to open output file\n";
         return 1;
     }
